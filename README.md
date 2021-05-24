@@ -22,13 +22,14 @@ You can already find different examples of IaC scripts to deploy an AzureContain
 
 # Deployment
 - create a resource group.
-- run the az deployment command
+- run the az deployment command to target the bicep orcestrator file (00main.bicep) specifying the following parameters.
     - appId : prefix to name the different artifacts.
     - targetHost : hostname of the loadtest target
     - nrOfWorkers : number of locust workers [default value: 4]
     - environment [default value : dev] 
     - randomizeLocation : whether to randomize the locations of the locust workers [default value : true 
 
+The locust master and all the support artifacts (storage account, deployment scripts, etc..) are created in the same location of the resource group.
 
 ```
 $rgname = 'rg-laodtest'
@@ -39,7 +40,13 @@ az deployment group create -f ./00main.bicep -g $rgname
     -p targetHost=lnl-webfront-afd.azurefd.net
 ```
 
+result of the deployment
+
+![result](images/deployment_result.png)
+
 # Run Load Test
+The Locus web interface is available at this URL : http://lts-dev-locust-master.francecentral.azurecontainer.io:8089/
+
 
 # Conclusions
 

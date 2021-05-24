@@ -36,7 +36,7 @@ var roleAssignmentName = guid(resourceGroup().id, 'contributor')
 var contributorRoleDefinitionId = resourceId('Microsoft.Authorization/roleDefinitions', 'b24988ac-6180-42a0-ab88-20f7382dd24c')
 var deploymentScriptName = toLower('${appId}-${environment}-pyconfig')
 var filePath = 'locustfile.py'
-var externalPath = 'https://raw.githubusercontent.com/MassimoC/bicep-aci-locust/main/bicep/${filePath}'
+var externalPath = 'https://raw.githubusercontent.com/MassimoC/bicep-aci-locust/main/locust/${filePath}'
 
 /*
 ------------------------

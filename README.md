@@ -12,8 +12,8 @@ You can already find different examples of IaC scripts to deploy an AzureContain
 
 
 **The goal of this exercise** is to deploy a Locust WebUI test infrastructure using [Bicep](https://github.com/Azure/bicep).
-- a secondary goal was to not use additional scripts (bicep only) but unfortunately we need to copy the python script to the file share. The ARM DeploymentStripts is used to copy the file to the Storage Account share.
-- DeploymentStripts introduces a lot of un-necessary complexity just to copy a single file (the same task [simple](https://github.com/heoelri/locust-on-aci/blob/7a49613a195a258b4ca6032e0abaafd6ccd358c0/src/headless/infra/storage.tf#L29) in Terraform). 
+- a secondary goal was to not use additional scripts (bicep only) but unfortunately ARM do not provide the functionality to copy a file (the python script) to the file share. The ARM DeploymentStripts is used for that purpose.
+- DeploymentStripts introduces a lot of un-necessary complexity. It's crazy to have to create MSI, ACI and a storage to simply upload a file to a share (the same task is extremely [simple](https://github.com/heoelri/locust-on-aci/blob/7a49613a195a258b4ca6032e0abaafd6ccd358c0/src/headless/infra/storage.tf#L29) in Terraform or using the az cli). 
 
 
 
@@ -45,8 +45,31 @@ result of the deployment
 ![result](images/deployment_result.png)
 
 # Run Load Test
-The Locus web interface is available at this URL : http://lts-dev-locust-master.francecentral.azurecontainer.io:8089/
+The Locus web interface is available at this URL : http://{appId }-{environment}-locust-master.{location}.azurecontainer.io:8089/ (http://lts-dev-locust-master.francecentral.azurecontainer.io:8089/)
 
+For this exercise, I used Locust to test a AFD+APIM+APPSVC [infrastructure](https://github.com/MassimoC/front-door-apim-appservice).
+ - Azure Front Door (Classic - Global)
+ - Azure API Management (Premium - France Central)
+ - Azure App Service (3x P1V2 - France Central)
+ - Locust (8 workers : 'francecentral', 'japaneast', 'eastus2', 'westeurope', 'northeurope', 'westus', 'australiaeast', 'southcentralus')
+
+3 run has been triggered with 2000, 400 and 800 users.
+![](images/2000-400-800.png)
+
+Northeurope have the better total latency (avg)
+![](images/afd-total-latency.png)
+
+The metrics are split by 'Client Country'. 3 workers are in the US.
+![](images/TotalRequestPerRegion.png)
+
+I was not expecting this latency from AFD
+![](images/AFDtotalLatency-vs-BackendLatency.png)
+
+Avg duration per component during the run with 800 users.
+![](images/AvgDuration-800users.png)
+
+APIM cpu (10%) during the run with 800 users 
+![](images/apim-cpu-800users.png)
 
 # Conclusions
 

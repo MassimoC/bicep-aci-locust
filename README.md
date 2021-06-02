@@ -16,10 +16,6 @@ You can already find different examples of IaC scripts to deploy an AzureContain
 - DeploymentStripts introduces a lot of un-necessary complexity. It's crazy to have to create MSI, ACI and a storage to simply upload a file to a share (the same task is extremely [simple](https://github.com/heoelri/locust-on-aci/blob/7a49613a195a258b4ca6032e0abaafd6ccd358c0/src/headless/infra/storage.tf#L29) in Terraform or using the az cli). 
 
 
-
-# Architecture
-
-
 # Deployment
 - create a resource group.
 - run the az deployment command to target the bicep orcestrator file (00main.bicep) specifying the following parameters.
@@ -48,8 +44,8 @@ result of the deployment
 The Locus web interface is available at this URL : http://{appId }-{environment}-locust-master.{location}.azurecontainer.io:8089/ (http://lts-dev-locust-master.francecentral.azurecontainer.io:8089/)
 
 For this exercise, I used Locust to test a AFD+APIM+APPSVC [infrastructure](https://github.com/MassimoC/front-door-apim-appservice).
- - Azure Front Door (Classic - Global)
- - Azure API Management (Premium - France Central)
+ - Azure Front Door (Classic - Global service, WAF enabled)
+ - Azure API Management (Premium - France Central - 100% logging to Application Insights)
  - Azure App Service (3x P1V2 - France Central)
  - Locust (8 workers : 'francecentral', 'japaneast', 'eastus2', 'westeurope', 'northeurope', 'westus', 'australiaeast', 'southcentralus')
 
@@ -74,4 +70,6 @@ APIM cpu (10%) during the run with 800 users
 ![](images/apim-cpu-800users.png)
 
 # Conclusions
-
+Locust on ACI enables you to create a distributed load test architecture in minutes.
+I was expecting a lower latency from FrontDoor, the test has been triggered with the WAF enabled using a single GET method.
+This article should be updated with a APIM+AppSvc baseline.

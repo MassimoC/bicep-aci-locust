@@ -53,6 +53,8 @@ For this exercise, I used Locust to test a AFD+APIM+APPSVC [infrastructure](http
  - Azure App Service (3x P1V2 - France Central)
  - Locust (8 workers : 'francecentral', 'japaneast', 'eastus2', 'westeurope', 'northeurope', 'westus', 'australiaeast', 'southcentralus')
 
+![scenario](images/scenario.png)
+
 3 run has been triggered with 2000, 400 and 800 users.
 ![](images/2000-400-800.png)
 

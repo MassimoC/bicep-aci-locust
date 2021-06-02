@@ -13,32 +13,27 @@ param environment string = 'dev'
 @maxLength(3)
 param appId string
 
-
 @description('Storage account name. Where to locate the commands to be executed.')
 param storageAccountName string
 
 @description('Storage share name.')
 param fileShareName string = 'locust'
 
-@description('Hostname of the loadtest target.')
-param host string
-
 @description('Hostname of the locust master node')
 param masterHost string
 
 @description('Index of the worker instance')
-param instanceIndex int 
+param instanceIndex int
 
 @description('Location of the worker.')
 param location string = resourceGroup().location
-
 
 /*
 ------------------------
 global variables
 ------------------------
 */
-var aciNameWorker  = toLower('${appId}-${environment}-locust-worker-${instanceIndex}')
+var aciNameWorker = toLower('${appId}-${environment}-locust-worker-${instanceIndex}')
 var image = 'locustio/locust:1.5.3'
 var cpuCores = 1
 var memoryInGb = 2

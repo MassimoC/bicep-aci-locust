@@ -13,7 +13,6 @@ param environment string = 'dev'
 @maxLength(3)
 param appId string
 
-
 @description('Storage account name. Where to locate the commands to be executed.')
 param storageAccountName string
 
@@ -28,7 +27,7 @@ param host string
 global variables
 ------------------------
 */
-var aciNameMaster  = toLower('${appId}-${environment}-locust-master')
+var aciNameMaster = toLower('${appId}-${environment}-locust-master')
 var image = 'locustio/locust:1.5.3'
 var cpuCores = 1
 var memoryInGb = 2

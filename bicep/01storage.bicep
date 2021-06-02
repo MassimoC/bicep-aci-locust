@@ -30,7 +30,7 @@ param storageAccountSKU string = 'Standard_LRS'
 global variables
 ------------------------
 */
-var storageAccountName  = toLower('${appId}${environment}sto')
+var storageAccountName = toLower('${appId}${environment}sto')
 var userAssignedIdentityName = toLower('${appId}-${environment}-msi')
 var roleAssignmentName = guid(resourceGroup().id, 'contributor')
 var contributorRoleDefinitionId = resourceId('Microsoft.Authorization/roleDefinitions', 'b24988ac-6180-42a0-ab88-20f7382dd24c')
@@ -88,7 +88,7 @@ resource deploymentScript 'Microsoft.Resources/deploymentScripts@2020-10-01' = {
   properties: {
     azPowerShellVersion: '3.0'
     arguments: '-rgName ${resourceGroup().name} -storageAccountName ${storage.name} -filePath ${filePath}'
-    supportingScriptUris:[
+    supportingScriptUris: [
       externalPath
     ]
     scriptContent: '''
@@ -97,7 +97,7 @@ resource deploymentScript 'Microsoft.Resources/deploymentScripts@2020-10-01' = {
       $file = Get-Item $filePath
       Set-AzStorageFileContent -ShareName 'locust' -Source $file.FullName -Context $ctx.Context
       $DeploymentScriptOutputs = @{}
-    '''    
+    '''
     retentionInterval: 'P1D'
   }
   dependsOn: [

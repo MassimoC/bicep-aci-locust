@@ -126,7 +126,6 @@ module locustworker './03aciworker.bicep' = [for i in range(0,nrOfWorkers): {
     environment: environment
     appId: appId
     storageAccountName:storageAccountName
-    host:targetHost
     masterHost:masterHost
     instanceIndex: i
     location: randomizeLocation ? azlocations[i] : resourceGroup().location

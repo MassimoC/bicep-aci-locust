@@ -40,6 +40,19 @@ result of the deployment
 
 ![result](images/deployment_result.png)
 
+
+az cli : stop the workers
+
+```
+$rgname = 'ah-loadtest-with-aci'
+$workers_names=(az container list --resource-group $rgname --query "[?contains(@.name, 'worker')].name" --output tsv)
+foreach ($aci in $workers_names) {
+    Write-Output "stopping the instance $aci"
+    az container stop --name $aci --resource-group $rgname
+}
+```
+
+
 # Run Load Test
 The Locus web interface is available at this URL : http://{appId }-{environment}-locust-master.{location}.azurecontainer.io:8089/ (http://lts-dev-locust-master.francecentral.azurecontainer.io:8089/)
 
